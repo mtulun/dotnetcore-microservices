@@ -21,21 +21,33 @@ namespace PlatformService
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly IWebHostEnvironment environment;
+        public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
+            this.environment = environment;
             Configuration = configuration;
+
         }
 
         public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
-            // Just using for testing(In memory database). When the program starts over we will lose all data in there.
-            services.AddDbContext<AppDbContext>(opt => opt.UseInMemoryDatabase("InMem"));
-            
-            services.AddScoped<IPlatformRepo,PlatformRepo>();
+            // if (environment.IsProduction())
+            // {
+                System.Console.WriteLine("--> Using SqlServer Db");
+                services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("PlatformsConn")));
+            // }
+            // else
+            // {
+            //     System.Console.WriteLine("--> Using InMem Db");
+            //     // Just using for testing(In memory database). When the program starts over we will lose all data in there.
+            //     services.AddDbContext<AppDbContext>(opt => opt.UseInMemoryDatabase("InMem"));
+            // }
 
-            services.AddHttpClient<ICommandDataClient,HttpCommandDataClient>();
+            services.AddScoped<IPlatformRepo, PlatformRepo>();
+
+            services.AddHttpClient<ICommandDataClient, HttpCommandDataClient>();
 
             // Registering auto mapper into the project.
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -70,7 +82,7 @@ namespace PlatformService
             });
 
             // For static class
-            PrepDb.PrepPopulation(app);
+            // PrepDb.PrepPopulation(app,env.IsProduction());
         }
     }
 }
