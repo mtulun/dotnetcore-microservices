@@ -33,17 +33,17 @@ namespace PlatformService
 
         public void ConfigureServices(IServiceCollection services)
         {
-            // if (environment.IsProduction())
-            // {
+            if (environment.IsProduction())
+            {
                 System.Console.WriteLine("--> Using SqlServer Db");
                 services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("PlatformsConn")));
-            // }
-            // else
-            // {
-            //     System.Console.WriteLine("--> Using InMem Db");
-            //     // Just using for testing(In memory database). When the program starts over we will lose all data in there.
-            //     services.AddDbContext<AppDbContext>(opt => opt.UseInMemoryDatabase("InMem"));
-            // }
+            }
+            else
+            {
+                System.Console.WriteLine("--> Using InMem Db");
+                // Just using for testing(In memory database). When the program starts over we will lose all data in there.
+                services.AddDbContext<AppDbContext>(opt => opt.UseInMemoryDatabase("InMem"));
+            }
 
             services.AddScoped<IPlatformRepo, PlatformRepo>();
 
@@ -82,7 +82,7 @@ namespace PlatformService
             });
 
             // For static class
-            // PrepDb.PrepPopulation(app,env.IsProduction());
+            PrepDb.PrepPopulation(app,env.IsProduction());
         }
     }
 }
