@@ -15,6 +15,7 @@ using Microsoft.OpenApi.Models;
 using PlatformService.Data;
 using PlatformService.Data.Abstract;
 using PlatformService.Data.Concrete;
+using PlatformService.SyncDataServices.Http;
 
 namespace PlatformService
 {
@@ -34,6 +35,8 @@ namespace PlatformService
             
             services.AddScoped<IPlatformRepo,PlatformRepo>();
 
+            services.AddHttpClient<ICommandDataClient,HttpCommandDataClient>();
+
             // Registering auto mapper into the project.
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -42,6 +45,8 @@ namespace PlatformService
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "PlatformService", Version = "v1" });
             });
+
+            System.Console.WriteLine($"--> CommandService Endpoint {Configuration["CommandService"]}");
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

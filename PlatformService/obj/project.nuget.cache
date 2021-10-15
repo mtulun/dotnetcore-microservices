@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "vO+kdODBiaWx7zxRUD7Ygknd2CqWGTCXYHCextDr5BEUSYNJ/avjB+AqtOn189+/T6dqYzw1xCsSSTXU1U9JKg==",
+  "dgSpecHash": "DqlIhTK4CvVM6jZ2doe5h8rJtwSTXHgrECtHarxNVQNVRgZbhKp8Mlrqos049leteEREFYUDiNTCzzLgGagY7A==",
   "success": true,
-  "projectFilePath": "C:\\Users\\tayla\\Desktop\\PlatformService\\PlatformService.csproj",
+  "projectFilePath": "C:\\Users\\tayla\\Desktop\\Microservice dotnetcore\\PlatformService\\PlatformService.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\tayla\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
     "C:\\Users\\tayla\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.1\\automapper.extensions.microsoft.dependencyinjection.8.1.1.nupkg.sha512",

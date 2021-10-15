@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\tayla\\Desktop\\PlatformService\\PlatformService.csproj": {}
+    "C:\\Users\\tayla\\Desktop\\Microservice dotnetcore\\PlatformService\\PlatformService.csproj": {}
   },
   "projects": {
-    "C:\\Users\\tayla\\Desktop\\PlatformService\\PlatformService.csproj": {
+    "C:\\Users\\tayla\\Desktop\\Microservice dotnetcore\\PlatformService\\PlatformService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\tayla\\Desktop\\PlatformService\\PlatformService.csproj",
+        "projectUniqueName": "C:\\Users\\tayla\\Desktop\\Microservice dotnetcore\\PlatformService\\PlatformService.csproj",
         "projectName": "PlatformService",
-        "projectPath": "C:\\Users\\tayla\\Desktop\\PlatformService\\PlatformService.csproj",
+        "projectPath": "C:\\Users\\tayla\\Desktop\\Microservice dotnetcore\\PlatformService\\PlatformService.csproj",
         "packagesPath": "C:\\Users\\tayla\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\tayla\\Desktop\\PlatformService\\obj\\",
+        "outputPath": "C:\\Users\\tayla\\Desktop\\Microservice dotnetcore\\PlatformService\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\tayla\\AppData\\Roaming\\NuGet\\NuGet.Config",
