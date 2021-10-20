@@ -19,8 +19,6 @@ namespace CommandsService.Controllers
 
         }
 
-        /*                  MOVE ON HERE!!!!!                    */
-
         [HttpGet]
         public ActionResult<IEnumerable<PlatformReadDto>> GetPlatforms()
         {
