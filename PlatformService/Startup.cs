@@ -12,6 +12,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using PlatformService.AsyncDataServices.Abstract;
+using PlatformService.AsyncDataServices.Concrete;
 using PlatformService.Data;
 using PlatformService.Data.Abstract;
 using PlatformService.Data.Concrete;
@@ -48,6 +50,8 @@ namespace PlatformService
             services.AddScoped<IPlatformRepo, PlatformRepo>();
 
             services.AddHttpClient<ICommandDataClient, HttpCommandDataClient>();
+
+            services.AddSingleton<IMessageBusClient,MessageBusClient>();
 
             // Registering auto mapper into the project.
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

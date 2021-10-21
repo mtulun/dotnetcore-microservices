@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 using System.Text.Json;
 using Microsoft.Extensions.Configuration;
 using PlatformService.AsyncDataServices.Abstract;
@@ -42,7 +43,7 @@ namespace PlatformService.AsyncDataServices.Concrete
         }
         private void RabbitMQConnectionShutdown(object sender, ShutdownEventArgs e)
         {
-            System.Console.WriteLine("--> RabbitMQ connection shutdown...");
+            System.Console.WriteLine("--> RabbitMQ connection shutting down...");
         }
         public void PublishNewPlatform(PlatformPublishedDto platformPublishedDto)
         {
@@ -51,11 +52,33 @@ namespace PlatformService.AsyncDataServices.Concrete
             if (connection.IsOpen)
             {
                 System.Console.WriteLine("--> RabbitMQ connected, sending messages...");
-                // TODO: Create sendmessage method in here...
+                SendMessage(message);
             }
             else
             {
                 System.Console.WriteLine("--> RabbitMQ not connected...");
+            }
+        }
+
+        public void SendMessage(string message)
+        {
+            var body = Encoding.UTF8.GetBytes(message);
+
+            channel.BasicPublish(
+                exchange: "trigger",
+                routingKey: "",
+                basicProperties: null,
+                body: body);
+
+            System.Console.WriteLine($"--> We've sent {message}");
+        }
+        public void Dispose()
+        {
+            System.Console.WriteLine("--> Message bus disposed");
+            if (channel.IsOpen)
+            {
+                channel.Close();
+                connection.Close();
             }
         }
     }

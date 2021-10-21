@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using PlatformService.AsyncDataServices.Abstract;
 using PlatformService.Data.Abstract;
 using PlatformService.Dtos;
 using PlatformService.Models;
@@ -16,8 +18,10 @@ namespace PlatformService.Controllers
         private readonly IPlatformRepo repository;
         private readonly IMapper mapper;
         private readonly ICommandDataClient commandDataClient;
-        public PlatformsController(IPlatformRepo repository, IMapper mapper, ICommandDataClient commandDataClient)
+        private readonly IMessageBusClient messageBusClient;
+        public PlatformsController(IPlatformRepo repository, IMapper mapper, ICommandDataClient commandDataClient, IMessageBusClient messageBusClient)
         {
+            this.messageBusClient = messageBusClient;
             this.commandDataClient = commandDataClient;
             this.mapper = mapper;
             this.repository = repository;
@@ -48,13 +52,27 @@ namespace PlatformService.Controllers
 
             var platformReadDto = mapper.Map<PlatformReadDto>(platformModel);
 
+            // Send Sync Message
+
             try
             {
-                 await commandDataClient.SendPlatformToCommand(platformReadDto);
+                await commandDataClient.SendPlatformToCommand(platformReadDto);
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 System.Console.WriteLine($"--> Could not send synchronously: {ex.Message}");
+            }
+
+            // Send Async Message
+            try
+            {
+                 var platformPublishedDto = mapper.Map<PlatformPublishedDto>(platformReadDto);
+                 platformPublishedDto.Event = "Platform_Published";
+                 messageBusClient.PublishNewPlatform(platformPublishedDto);
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine($"--> An error occured while sending message async: {ex.Message}");
             }
 
             return CreatedAtRoute(
